@@ -27,7 +27,7 @@ const ProductCard = (props: ProductProps) => {
 
     return (
         <>
-            <Card sx={{ width: "100%", maxWidth: 300 }}>
+            <Card sx={{ width: 250 }}>
                 <CardMedia
                     component="img"
                     height="120"
@@ -57,13 +57,12 @@ const ProductCard = (props: ProductProps) => {
                                 הוסף לעגלה
                             </Button>
                             {showPlusOne && (
-                                <Box
+                                <Box color="primary.main"
                                     sx={{
                                         position: "absolute",
                                         bottom: "50%",
                                         left: "50%",
                                         transform: "translate(-50%, 0)",
-                                        color: "purple",
                                         borderRadius: "50%",
                                         width: 30,
                                         height: 30,

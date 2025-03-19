@@ -39,3 +39,9 @@
     transform: rotate(360deg);
   }
 }
+
+:root .css-17hyop5-MuiGrid-root>.MuiGrid-item {
+  display: "flex" !important;
+  justify-content: "center" !important;
+  align-items: "center" !important;
+}

@@ -14,7 +14,24 @@ import { ProductProps } from '../Types/ProductProps';
 const Details = ({ product, onClose }: ProductProps & { onClose: () => void }) => {
     return (
         <Dialog onClose={onClose} aria-labelledby="customized-dialog-title" open dir='rtl'>
+
+            <IconButton
+                aria-label="close"
+                onClick={onClose}
+                sx={{
+                    position: "absolute",
+                    top: 8,
+                    right: 8,
+                    color: "black"
+                }}
+            >
+                <CloseIcon />
+            </IconButton>
             <DialogTitle sx={{ m: 0, p: 2, fontSize: "bold" }} id="customized-dialog-title" textAlign={'center'}>
+                <strong>{product.name}</strong>
+                <Typography gutterBottom>{product.category} </Typography>
+            </DialogTitle>
+            <DialogContent dividers sx={{ display: "flex", flexDirection: "column", gap: "16px" }}>
                 <Box
                     sx={{
                         width: 500,
@@ -26,28 +43,9 @@ const Details = ({ product, onClose }: ProductProps & { onClose: () => void }) =
                         borderTopRightRadius: 4,
                     }}
                 />
-                <strong>{product.name}</strong>
-                <Typography gutterBottom>{product.category} </Typography>
-            </DialogTitle>
-            <IconButton
-                aria-label="close"
-                onClick={onClose}
-                sx={{
-                    position: 'absolute',
-                    right: 8,
-                    top: 8,
-                    color: "black",
-                }}
-            >
-                <CloseIcon />
-            </IconButton>
-            <DialogContent dividers>
-
-                <Typography gutterBottom>
-                    <strong>תיאור:</strong> {product.description}
-                </Typography>
-                <Typography gutterBottom>
-                    <strong>מחיר:</strong> {product.price}
+                <Typography gutterBottom={true} component="div">
+                    <div><strong>תיאור:</strong> {product.description}</div>
+                    <div><strong>מחיר:</strong> {product.price}</div>
                 </Typography>
             </DialogContent>
             <DialogActions>
