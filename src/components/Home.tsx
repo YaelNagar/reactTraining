@@ -31,7 +31,7 @@ const Home = () => {
                 <Tabs value={pageIndex} onChange={handleChange} sx={{ padding: 1, paddingRight: 3 }}>
                     <Tab
                         icon={
-                            <Badge badgeContent={getCartSize()} color="error">
+                            <Badge badgeContent={getCartSize()} color="primary">
                                 <ShoppingCartIcon color={getIconColor('cart')} fontSize='small' />
                             </Badge>
                         }

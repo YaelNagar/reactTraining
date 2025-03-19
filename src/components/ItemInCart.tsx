@@ -1,4 +1,3 @@
-import { ProductProps } from "../Types/ProductProps";
 import { Box, List, ListItem, ListItemAvatar, ListItemText, Avatar, IconButton } from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
 import useStore from "../store/store";
