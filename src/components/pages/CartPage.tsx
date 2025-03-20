@@ -17,6 +17,7 @@ const CartPage = () => {
             let index = 0;
             const interval = setInterval(() => {
                 index++;
+                clearCart();
                 setLoadingValue((prev) => prev + 100 / cartSize);
 
                 if (index >= cartSize) {
@@ -24,16 +25,20 @@ const CartPage = () => {
                     setTimeout(() => {
                         setLoading(false);
                         setAlertOpen(true);
-                        if (sum <= totalSum) clearCart();
                     }, 500);
                 }
-            }, 200);
+            }, 500);
         }
     }, [loading]);
 
     const HandleSendOrder = () => {
-        setLoading(true);
-        setLoadingValue(0);
+        if (sum <= totalSum) {
+            setLoading(true);
+            setLoadingValue(0);
+        }
+        else {
+            setAlertOpen(true);
+        }
     };
 
     return (
@@ -56,9 +61,7 @@ const CartPage = () => {
                         </Button>
                     )}
 
-                    {cartItems.map((item) => (
-                        <ItemInCart key={item.product.id} product={item.product} quantity={item.quantity} />
-                    ))}
+
 
                     {alertOpen && (
                         sum <= totalSum ? (
@@ -69,6 +72,9 @@ const CartPage = () => {
                     )}
                 </>
             )}
+            {cartItems.map((item) => (
+                <ItemInCart key={item.product.id} product={item.product} quantity={item.quantity} />
+            ))}
         </>
     );
 };

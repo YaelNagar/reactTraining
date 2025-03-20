@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { storeState } from "../Types/StoreState";
 import Product from "../Types/Product";
+import { totalmem } from "os";
 
 const calculateSum = (cart: { [id: number]: { product: Product, quantity: number } }) => {
     return Object.values(cart).reduce(
@@ -44,11 +45,18 @@ const useStore = create<storeState>((set, get) => ({
         };
     }),
 
-    clearCart: () => set((state) => ({
-        cart: {},
-        sum: 0,
-        totalSum: parseFloat((state.totalSum - state.sum).toFixed(2))
-    })),
+    clearCart: () => {
+        const state = useStore.getState();
+        const cartItems = Object.values(state.cart);
+
+        const item = cartItems[0];
+        state.totalSum = parseFloat((state.totalSum - item.product.price).toFixed(2));
+        if (item.quantity > 1) {
+            state.updateQuantity(item.product.id, item.quantity - 1);
+        } else {
+            state.removeFromCart(item.product.id);
+        }
+    },
 
     getCartSize: () => {
         const { cart } = get();
