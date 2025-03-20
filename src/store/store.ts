@@ -45,7 +45,7 @@ const useStore = create<storeState>((set, get) => ({
         };
     }),
 
-    clearCart: () => {
+    order: () => {
         const state = useStore.getState();
         const cartItems = Object.values(state.cart);
 

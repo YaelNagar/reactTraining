@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import AlertMessage from "../AlertMessage";
 
 const CartPage = () => {
-    const { cart, sum, totalSum, clearCart, getCartSize } = useStore();
+    const { cart, sum, totalSum, order, getCartSize } = useStore();
     const cartItems = Object.values(cart);
     const [alertOpen, setAlertOpen] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -17,7 +17,7 @@ const CartPage = () => {
             let index = 0;
             const interval = setInterval(() => {
                 index++;
-                clearCart();
+                order();
                 setLoadingValue((prev) => prev + 100 / cartSize);
 
                 if (index >= cartSize) {
@@ -31,7 +31,7 @@ const CartPage = () => {
         }
     }, [loading]);
 
-    const HandleSendOrder = () => {
+    const handleSendOrder = () => {
         if (sum <= totalSum) {
             setLoading(true);
             setLoadingValue(0);
@@ -56,12 +56,10 @@ const CartPage = () => {
                     {sum === 0 ? (
                         <Box>סל הקניות שלך ריק</Box>
                     ) : (
-                        <Button variant="contained" onClick={HandleSendOrder}>
+                        <Button variant="contained" onClick={handleSendOrder}>
                             הזמן {sum}₪
                         </Button>
                     )}
-
-
 
                     {alertOpen && (
                         sum <= totalSum ? (
@@ -72,6 +70,7 @@ const CartPage = () => {
                     )}
                 </>
             )}
+
             {cartItems.map((item) => (
                 <ItemInCart key={item.product.id} product={item.product} quantity={item.quantity} />
             ))}
