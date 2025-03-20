@@ -32,12 +32,16 @@ const CartPage = () => {
     }, [loading]);
 
     const handleSendOrder = () => {
+        debugger
         if (sum <= totalSum) {
             setLoading(true);
             setLoadingValue(0);
         }
         else {
             setAlertOpen(true);
+            setTimeout(() => {
+                setAlertOpen(false);
+            }, 2500);
         }
     };
 
