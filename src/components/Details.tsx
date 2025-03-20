@@ -45,7 +45,7 @@ const Details = ({ product, onClose }: ProductProps & { onClose: () => void }) =
                 />
                 <Typography gutterBottom={true} component="div">
                     <div><strong>תיאור:</strong> {product.description}</div>
-                    <div><strong>מחיר:</strong> {product.price}</div>
+                    <div><strong>מחיר:</strong> {product.price}₪</div>
                 </Typography>
             </DialogContent>
             <DialogActions>
