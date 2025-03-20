@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { ProductProps } from "../Types/ProductProps";
-import { Grid, Card, CardContent, Typography, CardMedia, Button, Box, Alert, Snackbar } from "@mui/material";
+import { Grid, Card, CardContent, Typography, CardMedia, Button, Box } from "@mui/material";
 import { Info, ShoppingCart } from '@mui/icons-material';
 import useStore from "../store/store";
 import Details from "./Details";
+import AlertMessage from "./AlertMessage";
 
 const ProductCard = (props: ProductProps) => {
     const { addToCart } = useStore();
@@ -94,14 +95,7 @@ const ProductCard = (props: ProductProps) => {
                 </style>
             </Card>
 
-            <Snackbar
-                open={alertOpen}
-                autoHideDuration={2000}
-                anchorOrigin={{ vertical: "top", horizontal: "center" }}
-                onClose={() => setAlertOpen(false)}
-            >
-                <Alert severity="success">פריט נוסף בהצלחה</Alert>
-            </Snackbar>
+            {alertOpen && <AlertMessage message="פריט נוסף בהצלחה" severityType="success" />}
         </>
     );
 };

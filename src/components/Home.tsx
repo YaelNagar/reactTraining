@@ -1,10 +1,10 @@
 import { Box, Grid, Typography, Tab, Tabs, Badge } from '@mui/material';
-import ProductList from './ProductList';
-import { useMemo, useState } from 'react';
+import ProductListPage from './pages/ProductListPage';
+import { useState } from 'react';
 import HomeIcon from '@mui/icons-material/Home';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import useStore from '../store/store';
-import Cart from './Cart';
+import CartPage from './pages/CartPage';
 
 const Home = () => {
     const { totalSum, getCartSize } = useStore();
@@ -43,7 +43,7 @@ const Home = () => {
                     />
                 </Tabs>
             </Box>
-            {currentPage == "home" ? <ProductList /> : <Cart />}
+            {currentPage == "home" ? <ProductListPage /> : <CartPage />}
         </Box>
     );
 };

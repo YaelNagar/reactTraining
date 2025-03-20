@@ -1,7 +1,12 @@
 import { Alert, Snackbar } from "@mui/material";
 import { useEffect, useState } from "react";
 
-const AlertMessage = () => {
+interface AlertMessageProps {
+    message: string;
+    severityType: "success" | "error" | "warning" | "info"
+}
+
+const AlertMessage: React.FC<AlertMessageProps> = ({ message, severityType }) => {
     const [alertOpen, setAlertOpen] = useState(true);
 
     setTimeout(() => {
@@ -12,10 +17,10 @@ const AlertMessage = () => {
         <Snackbar
             open={alertOpen}
             autoHideDuration={2000}
-            anchorOrigin={{ vertical: "top", horizontal: "center" }}
+            anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
             onClose={() => setAlertOpen(false)}
         >
-            <Alert severity="success">פריט נוסף בהצלחה</Alert>
+            <Alert severity={severityType}>{message}</Alert>
         </Snackbar>
     );
 };
