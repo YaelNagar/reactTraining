@@ -7,7 +7,7 @@ export interface storeState {
     sum: number;
     addToCart: (product: Product) => void;
     removeFromCart: (productId: number) => void;
-    order: () => void;
+    sendorder: () => void;
     getCartSize: () => number;
     updateQuantity: (productId: number, newQuantity: number) => void;
 }

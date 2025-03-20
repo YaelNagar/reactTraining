@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import AlertMessage from "../AlertMessage";
 
 const CartPage = () => {
-    const { cart, sum, totalSum, order, getCartSize } = useStore();
+    const { cart, sum, totalSum, sendorder, getCartSize } = useStore();
     const cartItems = Object.values(cart);
     const [alertOpen, setAlertOpen] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -17,7 +17,7 @@ const CartPage = () => {
             let index = 0;
             const interval = setInterval(() => {
                 index++;
-                order();
+                sendorder();
                 setLoadingValue((prev) => prev + 100 / cartSize);
 
                 if (index >= cartSize) {

@@ -45,7 +45,7 @@ const useStore = create<storeState>((set, get) => ({
         };
     }),
 
-    order: () => {
+    sendorder: () => {
         const state = useStore.getState();
         const cartItems = Object.values(state.cart);
 
