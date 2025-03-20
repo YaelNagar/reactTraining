@@ -3,12 +3,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import useStore from "../store/store";
-import Product from "../Types/Product";
-
-interface ItemInCartProps {
-    product: Product;
-    quantity: number;
-}
+import { ItemInCartProps } from "../Types/ItemInCartProps";
 
 const CartItems = ({ product, quantity }: ItemInCartProps) => {
     const { removeFromCart, updateQuantity } = useStore();

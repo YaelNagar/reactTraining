@@ -1,10 +1,6 @@
 import { Alert, Snackbar } from "@mui/material";
 import { useEffect, useState } from "react";
-
-interface AlertMessageProps {
-    message: string;
-    severityType: "success" | "error" | "warning" | "info"
-}
+import { AlertMessageProps } from "../Types/AlertMessageProps";
 
 const AlertMessage: React.FC<AlertMessageProps> = ({ message, severityType }) => {
     const [alertOpen, setAlertOpen] = useState(true);
