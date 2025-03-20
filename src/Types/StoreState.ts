@@ -9,4 +9,5 @@ export interface storeState {
     removeFromCart: (productId: number) => void;
     clearCart: () => void;
     getCartSize: () => number;
+    updateQuantity: (productId: number, newQuantity: number) => void;
 }

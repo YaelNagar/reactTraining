@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { ProductProps } from "../Types/ProductProps";
-import { Grid, Card, CardContent, Typography, CardMedia, Button, Box } from "@mui/material";
+import { Grid, Card, CardContent, Typography, CardMedia, Button, Box, Stack } from "@mui/material";
 import { Info, ShoppingCart } from '@mui/icons-material';
 import useStore from "../store/store";
 import Details from "./Details";
@@ -43,7 +43,7 @@ const ProductCard = (props: ProductProps) => {
                     <Typography gutterBottom component="div" sx={{ color: 'gray' }}>
                         {props.product.price}₪
                     </Typography>
-                    <Grid container justifyContent={"space-between"} sx={{ marginTop: 5 }}>
+                    <Stack justifyContent={"space-between"} direction="row" useFlexGap sx={{ marginTop: 5 }}>
                         <Button
                             size="small"
                             variant="contained"
@@ -79,7 +79,7 @@ const ProductCard = (props: ProductProps) => {
                                 </Box>
                             )}
                         </Box>
-                    </Grid>
+                    </Stack>
                 </CardContent>
 
                 {dialogOpen && <Details product={props.product} onClose={() => setDialogOpen(false)} />}

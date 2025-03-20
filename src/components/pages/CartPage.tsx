@@ -1,6 +1,6 @@
 import { Button, Box, LinearProgress } from "@mui/material";
 import useStore from "../../store/store";
-import ItemInCart from "../ItemInCart";
+import ItemInCart from "../CartItems";
 import { useState, useEffect } from "react";
 import AlertMessage from "../AlertMessage";
 
@@ -27,7 +27,7 @@ const CartPage = () => {
                         if (sum <= totalSum) clearCart();
                     }, 500);
                 }
-            }, 500);
+            }, 200);
         }
     }, [loading]);
 
