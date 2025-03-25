@@ -1,9 +1,13 @@
 import { Alert, Snackbar } from "@mui/material";
 import { useState } from "react";
-import { AlertMessageProps } from "../Types/AlertMessageProps";
 
-const AlertMessage: React.FC<AlertMessageProps> = ({ message, severityType }) => {
-    const [alertOpen, setAlertOpen] = useState(true);
+interface AlertMessageProps {
+    message: string;
+    severityType: "success" | "error" | "warning" | "info"
+}
+
+const AlertMessage = (props: AlertMessageProps) => {
+    const [alertOpen, setAlertOpen] = useState<boolean>(true);
 
     setTimeout(() => {
         setAlertOpen(false);
@@ -16,7 +20,7 @@ const AlertMessage: React.FC<AlertMessageProps> = ({ message, severityType }) =>
             anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
             onClose={() => setAlertOpen(false)}
         >
-            <Alert severity={severityType}>{message}</Alert>
+            <Alert severity={props.severityType}>{props.message}</Alert>
         </Snackbar>
     );
 };

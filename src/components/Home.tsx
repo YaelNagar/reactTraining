@@ -1,30 +1,26 @@
 import { Box, Typography, Tab, Tabs, Badge } from '@mui/material';
-import ProductListPage from './pages/ProductListPage';
+import ProductListPage from '@/components/pages/ProductListPage';
 import { useState } from 'react';
 import HomeIcon from '@mui/icons-material/Home';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import useStore from '../store/store';
-import CartPage from './pages/CartPage';
-import useCart from '../hooks/useCart';
+import useStore from '@/store/store';
+import CartPage from '@/components/pages/CartPage';
+import useCart from '@/hooks/useCart';
+
+enum Page {
+    Cart = 0,
+    Home = 1,
+}
 
 const Home = () => {
     const { cartSize } = useCart();
     const { totalSum } = useStore();
-    const [currentPage, setCurrentPage] = useState('home');
-    const pageIndex = currentPage === 'home' ? 1 : 0;
-    //const [, setValue] = useState(0);
+    const [currentPage, setCurrentPage] = useState<Page>(Page.Home);
+    const homeIconColor = currentPage === Page.Home ? 'primary' : 'action';
+    const cartIconColor = currentPage === Page.Cart ? 'primary' : 'action';
 
-    /*const handleChange = (_: React.SyntheticEvent, newValue: number) => {
-        setValue(newValue);
-    };*/
-
-    const handleChange = (_: React.SyntheticEvent, newValue: number) => {
-        setCurrentPage(newValue === 1 ? 'home' : 'cart');
-    };
-
-
-    const getIconColor = (page: string) => {
-        return currentPage === page ? 'primary' : 'action';
+    const handleChange = (_: React.SyntheticEvent, newValue: Page) => {
+        setCurrentPage(newValue);
     };
 
     return (
@@ -35,22 +31,22 @@ const Home = () => {
                 </Typography>
             </Box>
             <Box sx={{ width: '100%', display: 'flex', justifyContent: 'right' }}>
-                <Tabs value={pageIndex} onChange={handleChange} sx={{ padding: 1, paddingRight: 3 }}>
+                <Tabs value={currentPage} onChange={handleChange} sx={{ padding: 1, paddingRight: 3 }}>
                     <Tab
                         icon={
                             <Badge badgeContent={cartSize} color="primary">
-                                <ShoppingCartIcon color={getIconColor('cart')} fontSize='small' />
+                                <ShoppingCartIcon color={cartIconColor} fontSize='small' />
                             </Badge>
                         }
-                        onClick={() => setCurrentPage('cart')}
+                        onClick={() => setCurrentPage(Page.Cart)}
                     />
                     <Tab
-                        icon={<HomeIcon color={getIconColor('home')} fontSize="small" />}
-                        onClick={() => setCurrentPage('home')}
+                        icon={<HomeIcon color={homeIconColor} fontSize="small" />}
+                        onClick={() => setCurrentPage(Page.Home)}
                     />
                 </Tabs>
             </Box>
-            {currentPage == "home" ? <ProductListPage /> : <CartPage />}
+            {currentPage == Page.Home ? <ProductListPage /> : <CartPage />}
         </Box>
     );
 };

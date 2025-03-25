@@ -1,6 +1,17 @@
 import { create } from "zustand";
-import { storeState } from "../Types/StoreState";
-import Product from "../Types/Product";
+import { Product } from "@/types/Product";
+import { CartItem } from "@/types/CartItem";
+
+export interface storeState {
+    totalSum: number;
+    cart: { [id: number]: CartItem };
+    sum: number;
+    addToCart: (product: Product) => void;
+    removeFromCart: (productId: number) => void;
+    sendorder: () => void;
+    getCartSize: () => number;
+    updateQuantity: (productId: number, newQuantity: number) => void;
+}
 
 const calculateSum = (cart: { [id: number]: { product: Product, quantity: number } }) => {
     return Object.values(cart).reduce(
@@ -14,35 +25,33 @@ const useStore = create<storeState>((set, get) => ({
     cart: {},
     sum: 0,
 
-    addToCart: (product) => set((state) => {
-        const cartCopy = { ...state.cart };
+    addToCart: (product) => set((state) => ({
+        cart: {
+            ...state.cart,
+            [product.id]: state.cart[product.id]
+                ? { ...state.cart[product.id], quantity: state.cart[product.id].quantity + 1 }
+                : { product, quantity: 1 }
+        },
+        sum: parseFloat(calculateSum({
+            ...state.cart,
+            [product.id]: state.cart[product.id]
+                ? { ...state.cart[product.id], quantity: state.cart[product.id].quantity + 1 }
+                : { product, quantity: 1 }
+        }).toFixed(2))
+    })),
 
-        if (cartCopy[product.id]) {
-            cartCopy[product.id].quantity += 1;
-        } else {
-            cartCopy[product.id] = { product, quantity: 1 };
-        }
-
-        const updatedSum = calculateSum(cartCopy);
-
-        return {
-            cart: cartCopy,
-            sum: parseFloat(updatedSum.toFixed(2))
-        };
-    }),
 
     removeFromCart: (productId) => set((state) => {
-        const cartCopy = { ...state.cart };
-
-        delete cartCopy[productId];
-
-        const updatedSum = calculateSum(cartCopy);
+        const newCart = Object.fromEntries(
+            Object.entries(state.cart).filter(([id]) => id !== productId.toString())
+        );
 
         return {
-            cart: cartCopy,
-            sum: parseFloat(updatedSum.toFixed(2))
+            cart: newCart,
+            sum: parseFloat(calculateSum(newCart).toFixed(2))
         };
     }),
+
 
     sendorder: () => {
         const state = useStore.getState();

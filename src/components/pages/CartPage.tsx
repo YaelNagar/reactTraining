@@ -1,39 +1,43 @@
 import { Button, Box, LinearProgress } from "@mui/material";
-import useStore from "../../store/store";
-import ItemInCart from "../ItemsInCart";
+import useStore from "@/store/store";
+import ItemInCart from "@/components/ItemsInCart";
 import { useState, useEffect } from "react";
-import AlertMessage from "../AlertMessage";
-import useCart from "../../hooks/useCart";
+import AlertMessage from "@/components/AlertMessage";
+import useCart from "@/hooks/useCart";
 
 const CartPage = () => {
     const { totalSum } = useStore();
-    const { cart, sum, sendOrder, cartSize } = useCart();
-    const cartItems = Object.values(cart);
-    const [alertOpen, setAlertOpen] = useState(false);
-    const [loading, setLoading] = useState(false);
-    const [loadingValue, setLoadingValue] = useState(0);
+    const { sum, sendOrder, cartSize, cartItems } = useCart();
+    const [alertOpen, setAlertOpen] = useState<boolean>(false);
+    const [loading, setLoading] = useState<boolean>(false);
+    const [loadingValue, setLoadingValue] = useState<number>(0);
+    const [, setIndex] = useState<number>(0);
 
     useEffect(() => {
         if (loading) {
-            let index = 0;
             const interval = setInterval(() => {
-                index++;
                 sendOrder();
                 setLoadingValue((prev) => prev + 100 / cartSize);
 
-                if (index >= cartSize) {
-                    clearInterval(interval);
-                    setTimeout(() => {
-                        setLoading(false);
-                        setAlertOpen(true);
-                    }, 500);
-                }
+                setIndex((prevIndex) => {
+                    const newIndex = prevIndex + 1;
+
+                    if (newIndex >= cartSize) {
+                        clearInterval(interval);
+                        setTimeout(() => {
+                            setLoading(false);
+                            setAlertOpen(true);
+                        }, 500);
+                    }
+
+                    return newIndex;
+                });
             }, 500);
         }
     }, [loading]);
 
+
     const handleSendOrder = () => {
-        debugger
         if (sum <= totalSum) {
             setLoading(true);
             setLoadingValue(0);
@@ -53,7 +57,7 @@ const CartPage = () => {
                     <LinearProgress
                         variant="determinate"
                         value={loadingValue}
-                        sx={{ width: '300px', height: '8px' }}
+                        sx={{ width: '30rem', height: '0.25rem' }}
                     />
                 </Box>
             ) : (

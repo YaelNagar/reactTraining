@@ -1,9 +1,15 @@
-import { useCallback } from "react";
-import useStore from "../store/store";
-import Product from "../Types/Product";
+import { useCallback, useMemo } from "react";
+import useStore from "@/store/store";
+import { Product } from "@/types/Product";
 
 const useCart = () => {
     const { cart, sum, addToCart, removeFromCart, updateQuantity, getCartSize, sendorder } = useStore();
+
+    const cartItems = Object.values(cart);
+
+    const cartSize = useMemo(() => {
+        return getCartSize();
+    }, [cart]);
 
     const handleAddToCart = useCallback((product: Product) => {
         addToCart(product);
@@ -24,7 +30,8 @@ const useCart = () => {
     return {
         cart,
         sum,
-        cartSize: getCartSize(),
+        cartSize,
+        cartItems,
         addToCart: handleAddToCart,
         removeFromCart: handleRemoveFromCart,
         updateQuantity: handleUpdateQuantity,

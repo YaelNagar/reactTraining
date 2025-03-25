@@ -1,65 +1,66 @@
-import { Box, List, ListItem, ListItemAvatar, ListItemText, Avatar, IconButton, Typography } from "@mui/material";
-import DeleteIcon from '@mui/icons-material/Delete';
-import AddIcon from '@mui/icons-material/Add';
-import RemoveIcon from '@mui/icons-material/Remove';
-import { ItemInCartProps } from "../Types/ItemInCartProps";
-import useCart from "../hooks/useCart";
+import { Box, ListItem, ListItemAvatar, ListItemText, Avatar, IconButton, Typography } from "@mui/material";
+import { Delete as DeleteIcon, Add as AddIcon, Remove as RemoveIcon } from '@mui/icons-material';
+import useCart from "@/hooks/useCart";
+import { Product } from "@/types/Product";
+
+interface ItemInCartProps {
+    product: Product;
+    quantity: number;
+}
 
 const ItemsInCart = ({ product, quantity }: ItemInCartProps) => {
     const { removeFromCart, updateQuantity } = useCart();
 
     return (
         <Box>
-            <List>
-                <ListItem
-                    sx={{
-                        display: "flex",
-                        flexDirection: "row-reverse",
-                        alignItems: "center",
-                        gap: 2,
-                    }}
+            <ListItem
+                sx={{
+                    display: "flex",
+                    flexDirection: "row-reverse",
+                    alignItems: "center",
+                    gap: 2,
+                }}
+            >
+                <ListItemAvatar>
+                    <Avatar src={product.image} alt={product.name} />
+                </ListItemAvatar>
+
+                <ListItemText
+                    primary={product.name}
+                    secondary={
+                        <Typography variant="body2" color="text.secondary">
+                            {product.price} ₪
+                        </Typography>
+                    }
+                    sx={{ textAlign: "right", flexGrow: 1 }}
+                />
+
+                <IconButton
+                    onClick={() => updateQuantity(product.id, quantity + 1)}
+                    sx={{ color: 'green' }}
                 >
-                    <ListItemAvatar>
-                        <Avatar src={product.image} alt={product.name} />
-                    </ListItemAvatar>
+                    <AddIcon />
+                </IconButton>
 
-                    <ListItemText
-                        primary={product.name}
-                        secondary={
-                            <Typography variant="body2" color="text.secondary">
-                                {product.price} ₪
-                            </Typography>
+                <Typography>{quantity}</Typography>
+
+                <IconButton
+                    onClick={() => {
+                        if (quantity > 1) {
+                            updateQuantity(product.id, quantity - 1);
+                        } else {
+                            removeFromCart(product.id);
                         }
-                        sx={{ textAlign: "right", flexGrow: 1 }}
-                    />
+                    }}
+                    sx={{ color: 'orange' }}
+                >
+                    <RemoveIcon />
+                </IconButton>
 
-                    <IconButton
-                        onClick={() => updateQuantity(product.id, quantity + 1)}
-                        sx={{ color: 'green' }}
-                    >
-                        <AddIcon />
-                    </IconButton>
-
-                    <Typography>{quantity}</Typography>
-
-                    <IconButton
-                        onClick={() => {
-                            if (quantity > 1) {
-                                updateQuantity(product.id, quantity - 1);
-                            } else {
-                                removeFromCart(product.id);
-                            }
-                        }}
-                        sx={{ color: 'orange' }}
-                    >
-                        <RemoveIcon />
-                    </IconButton>
-
-                    <IconButton onClick={() => removeFromCart(product.id)}>
-                        <DeleteIcon sx={{ color: 'red' }} />
-                    </IconButton>
-                </ListItem>
-            </List>
+                <IconButton onClick={() => removeFromCart(product.id)}>
+                    <DeleteIcon color="error" />
+                </IconButton>
+            </ListItem>
         </Box>
     );
 }
