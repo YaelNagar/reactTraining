@@ -32,12 +32,7 @@ const useStore = create<storeState>((set, get) => ({
                 ? { ...state.cart[product.id], quantity: state.cart[product.id].quantity + 1 }
                 : { product, quantity: 1 }
         },
-        sum: parseFloat(calculateSum({
-            ...state.cart,
-            [product.id]: state.cart[product.id]
-                ? { ...state.cart[product.id], quantity: state.cart[product.id].quantity + 1 }
-                : { product, quantity: 1 }
-        }).toFixed(2))
+        sum: parseFloat((state.sum + product.price).toFixed(2))
     })),
 
 

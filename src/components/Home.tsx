@@ -7,6 +7,8 @@ import useStore from '@/store/store';
 import CartPage from '@/components/pages/CartPage';
 import useCart from '@/hooks/useCart';
 
+//type Page= "home" | "cart"
+
 enum Page {
     Cart = 0,
     Home = 1,

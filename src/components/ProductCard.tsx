@@ -7,14 +7,14 @@ import PlusOne from "@/components/PlusOne";
 import useCart from "@/hooks/useCart";
 import { Product } from "@/types/Product";
 
-const ProductCard = ({ product }: { product: Product }) => {
+const ProductCard = (props: { product: Product }) => {
     const { addToCart } = useCart();
     const [dialogOpen, setDialogOpen] = useState<boolean>(false);
     const [showPlusOne, setShowPlusOne] = useState<boolean>(false);
     const [alertOpen, setAlertOpen] = useState<boolean>(false);
 
     const handleAddToCart = () => {
-        addToCart(product);
+        addToCart(props.product);
         setShowPlusOne(true);
         setAlertOpen(true);
 
@@ -33,17 +33,17 @@ const ProductCard = ({ product }: { product: Product }) => {
                 <CardMedia
                     component="img"
                     height="120rem"
-                    image={product.image}
-                    alt={product.name}
+                    image={props.product.image}
+                    alt={props.product.name}
                     sx={{ objectFit: "cover" }}
                 />
                 <CardContent>
                     <Box sx={{ display: "flex", justifyContent: "center", flexDirection: "column", alignItems: "center" }}>
                         <Typography gutterBottom>
-                            {product.name}
+                            {props.product.name}
                         </Typography>
                         <Typography gutterBottom sx={{ color: 'gray' }}>
-                            {product.price}₪
+                            {props.product.price}₪
                         </Typography>
                     </Box>
                     <Stack justifyContent={"space-between"} direction="row" useFlexGap sx={{ marginTop: 5 }}>
@@ -67,7 +67,7 @@ const ProductCard = ({ product }: { product: Product }) => {
                     </Stack>
                 </CardContent>
 
-                {dialogOpen && <Details product={product} onClose={() => setDialogOpen(false)} />}
+                {dialogOpen && <Details product={props.product} onClose={() => setDialogOpen(false)} />}
 
             </Card>
 

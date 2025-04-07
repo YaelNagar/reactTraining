@@ -11,6 +11,18 @@ interface ItemInCartProps {
 const ItemsInCart = ({ product, quantity }: ItemInCartProps) => {
     const { removeFromCart, updateQuantity } = useCart();
 
+    const decrease = () => {
+        if (quantity > 1) {
+            updateQuantity(product.id, quantity - 1);
+        } else {
+            removeFromCart(product.id);
+        }
+    }
+
+    const increase = () => {
+        updateQuantity(product.id, quantity + 1)
+    }
+
     return (
         <Box>
             <ListItem
@@ -36,7 +48,7 @@ const ItemsInCart = ({ product, quantity }: ItemInCartProps) => {
                 />
 
                 <IconButton
-                    onClick={() => updateQuantity(product.id, quantity + 1)}
+                    onClick={increase}
                     sx={{ color: 'green' }}
                 >
                     <AddIcon />
@@ -45,13 +57,7 @@ const ItemsInCart = ({ product, quantity }: ItemInCartProps) => {
                 <Typography>{quantity}</Typography>
 
                 <IconButton
-                    onClick={() => {
-                        if (quantity > 1) {
-                            updateQuantity(product.id, quantity - 1);
-                        } else {
-                            removeFromCart(product.id);
-                        }
-                    }}
+                    onClick={decrease}
                     sx={{ color: 'orange' }}
                 >
                     <RemoveIcon />

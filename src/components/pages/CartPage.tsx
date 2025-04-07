@@ -11,31 +11,26 @@ const CartPage = () => {
     const [alertOpen, setAlertOpen] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(false);
     const [loadingValue, setLoadingValue] = useState<number>(0);
-    const [, setIndex] = useState<number>(0);
 
     useEffect(() => {
         if (loading) {
-            const interval = setInterval(() => {
-                sendOrder();
-                setLoadingValue((prev) => prev + 100 / cartSize);
+            const processOrder = async () => {
+                for (let i = 0; i < cartSize; i++) {
+                    sendOrder();
+                    setLoadingValue((prev) => prev + 100 / cartSize);
+                    //setIndex(i + 1);
+                    await new Promise((resolve) => setTimeout(resolve, 500));
+                }
 
-                setIndex((prevIndex) => {
-                    const newIndex = prevIndex + 1;
+                setTimeout(() => {
+                    setLoading(false);
+                    setAlertOpen(true);
+                }, 500);
+            };
 
-                    if (newIndex >= cartSize) {
-                        clearInterval(interval);
-                        setTimeout(() => {
-                            setLoading(false);
-                            setAlertOpen(true);
-                        }, 500);
-                    }
-
-                    return newIndex;
-                });
-            }, 500);
+            processOrder();
         }
     }, [loading]);
-
 
     const handleSendOrder = () => {
         if (sum <= totalSum) {
